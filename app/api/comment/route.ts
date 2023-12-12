@@ -8,22 +8,6 @@ const createCommentSchema = z.object({
   authorId: z.number(),
 });
 
-export async function fetchAllCommentsByArticleId(articleId: number) {
-  try {
-    const comments = await prisma.comment.findMany({
-      where: {
-        articleId,
-      },
-      orderBy: {
-        createdAt: "desc",
-      },
-    });
-    return comments;
-  } catch (error) {
-    throw new Error(String(error));
-  }
-}
-
 // POST - Create a new comment
 // Path: /api/comment
 export async function POST(request: NextRequest) {

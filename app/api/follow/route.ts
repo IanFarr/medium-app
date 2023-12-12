@@ -7,32 +7,6 @@ const followSchema = z.object({
   followingId: z.number(),
 });
 
-export async function fetchAllFollowingByUserId(id: number) {
-  try {
-    const follows = await prisma.follow.findMany({
-      where: {
-        followerId: id,
-      },
-    });
-    return follows;
-  } catch (error) {
-    throw new Error(String(error));
-  }
-}
-
-export async function fetchAllFollowersByUserId(id: number) {
-  try {
-    const follows = await prisma.follow.findMany({
-      where: {
-        followingId: id,
-      },
-    });
-    return follows;
-  } catch (error) {
-    throw new Error(String(error));
-  }
-}
-
 // POST - Create a new follow
 // Path: /api/follow
 export async function POST(request: NextRequest) {

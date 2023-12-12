@@ -16,19 +16,6 @@ const updateUserSchema = z.object({
   bio: z.string().max(280),
 });
 
-export async function fetchUserById(id: number) {
-  try {
-    const user = await prisma.user.findUnique({
-      where: {
-        id,
-      },
-    });
-    return user;
-  } catch (error) {
-    throw new Error(String(error));
-  }
-}
-
 // POST - Create a new user
 // Path: /api/user
 export async function POST(request: NextRequest) {

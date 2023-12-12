@@ -7,19 +7,6 @@ const createClapSchema = z.object({
   authorId: z.number(),
 });
 
-export async function fetchNumClapsByArticleId(articleId: number) {
-  try {
-    const claps = await prisma.clap.count({
-      where: {
-        articleId,
-      },
-    });
-    return claps;
-  } catch (error) {
-    throw new Error(String(error));
-  }
-}
-
 // POST - Create a new clap
 // Path: /api/clap
 export async function POST(request: NextRequest) {

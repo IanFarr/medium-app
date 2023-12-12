@@ -1,8 +1,8 @@
 import styles from './page.module.css'
 // import { fetchAllArticles } from './lib/api/article'
-import { fetchNumClapsByArticleId } from '@/app/api/clap/route'
-import { fetchAllCommentsByArticleId } from '@/app/api/comment/route'
-import { fetchAllFollowersByUserId } from '@/app/api/follow/route'
+// import { fetchNumClapsByArticleId } from '@/app/api/clap/route'
+// import { fetchAllCommentsByArticleId } from '@/app/api/comment/route'
+import { fetchAllFollowersByUserId } from '@/app/lib/actions'
 
 export default async function Home() {
   // const articles = await fetchAllArticles()
