@@ -6,8 +6,9 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("POSTGRES_PRISMA_URL")
+  provider  = "postgresql"
+  url       = env("POSTGRES_PRISMA_URL") // uses connection pooling
+  directUrl = env("POSTGRES_URL_NON_POOLING") // uses a direct connection
 }
 
 model User {
@@ -16,7 +17,7 @@ model User {
   username  String    @unique
   name      String
   password  String
-  bio       String
+  bio       String    @db.Text
   birthday  DateTime
   articles  Article[]
   comments  Comment[]
@@ -30,7 +31,7 @@ model User {
 model Article {
   id        Int       @id @default(autoincrement())
   title     String
-  body      String
+  body      String    @db.Text
   tags      String[]
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
