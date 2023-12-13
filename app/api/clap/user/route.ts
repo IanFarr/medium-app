@@ -11,7 +11,7 @@ export async function GET(request: NextRequest) {
     const numClaps = await prisma.clap.count({
       where: {
         articleId: Number(articleId),
-        authorId: Number(userId),
+        clapperId: Number(userId),
       },
     });
     return NextResponse.json(numClaps, { status: 200 });
