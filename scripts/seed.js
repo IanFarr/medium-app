@@ -1,4 +1,3 @@
-const { db } = require("@vercel/postgres");
 const {
   users,
   articles,
