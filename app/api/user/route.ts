@@ -28,18 +28,21 @@ export async function POST(request: NextRequest) {
   const hashedPassword = await bcrypt.hash(body.password, 10);
   body.password = hashedPassword;
 
-  const newUser = await prisma.user.create({
-    data: {
-      email: body.email,
-      username: body.username,
-      name: body.name,
-      password: body.password,
-      bio: body.bio,
-      birthday: body.birthday,
-    }
-  });
-
-  return NextResponse.json(newUser, { status: 201 });
+  try {
+    const newUser = await prisma.user.create({
+      data: {
+        email: body.email,
+        username: body.username,
+        name: body.name,
+        password: body.password,
+        bio: body.bio,
+        birthday: body.birthday,
+      }
+    });
+    return NextResponse.json(newUser, { status: 201 });
+  } catch (error) {
+    return NextResponse.json({ error: String(error) }, { status: 400 });
+  }
 }
 
 // PATCH - Update a user
@@ -52,16 +55,20 @@ export async function PATCH(request: NextRequest) {
     return NextResponse.json({ error: validation.error }, { status: 400 });
   }
 
-  const updatedUser = await prisma.user.update({
-    where: {
-      id: Number(id),
-    },
-    data: {
-      bio: body.bio,
-    }
-  });
+  try {
+    const updatedUser = await prisma.user.update({
+      where: {
+        id: Number(id),
+      },
+      data: {
+        bio: body.bio,
+      }
+    });
 
-  return NextResponse.json(updatedUser, { status: 200 });
+    return NextResponse.json(updatedUser, { status: 200 });
+  } catch (error) {
+    return NextResponse.json({ error: String(error) }, { status: 400 });
+  }
 }
 
 // DELETE - Delete a user
@@ -69,11 +76,50 @@ export async function PATCH(request: NextRequest) {
 export async function DELETE(request: NextRequest) {
   const id = Number(request.nextUrl.searchParams.get('id'));
 
-  const deletedUser = await prisma.user.delete({
-    where: {
-      id: Number(id),
-    }
-  });
+  try {
+    const deletedUser = await prisma.user.delete({
+      where: {
+        id: Number(id),
+      }
+    });
+    return NextResponse.json(deletedUser, { status: 200 });
+  } catch (error) {
+    return NextResponse.json({ error: String(error) }, { status: 400 });
+  }
+}
 
-  return NextResponse.json(deletedUser, { status: 200 });
+// GET - Fetch user by id
+// Path: /api/user/:id
+export async function GET(request: NextRequest) {
+  const id = Number(request.nextUrl.searchParams.get('id'));
+
+  try {
+    const user = await prisma.user.findUnique({
+      where: {
+      id,
+    },
+    select: {
+      id: true,
+      email: true,
+      name: true,
+      username: true,
+      bio: true,
+      articles: {
+        orderBy: {
+          createdAt: 'desc',
+        },
+        select: {
+          id: true,
+          title: true,
+          tags: true,
+          createdAt: true,
+          updatedAt: true,
+        },
+      },
+    },
+  });
+  return NextResponse.json(user, { status: 200 });
+  } catch (error) {
+    return NextResponse.json({ error: String(error) }, { status: 400 });
+  }
 }

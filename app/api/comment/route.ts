@@ -17,15 +17,19 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: validation.error }, { status: 400 });
   }
 
-  const newComment = await prisma.comment.create({
-    data: {
-      body: body.body,
-      articleId: body.articleId,
-      authorId: body.authorId,
-    },
-  });
+  try {
+    const newComment = await prisma.comment.create({
+      data: {
+        body: body.body,
+        articleId: body.articleId,
+        authorId: body.authorId,
+      },
+    });
 
-  return NextResponse.json(newComment, { status: 201 });
+    return NextResponse.json(newComment, { status: 201 });
+  } catch (error) {
+    return NextResponse.json({ error: String(error) }, { status: 400 });
+  }
 }
 
 // PATCH - Update a comment
@@ -61,5 +65,25 @@ export async function DELETE(request: NextRequest) {
     return NextResponse.json(deletedComment, { status: 200 });
   } catch (error) {
     throw new Error(String(error));
+  }
+}
+
+// GET - Fetch all comments by articleId
+// Path: /api/comment?articleId
+export async function GET(request: NextRequest) {
+  const articleId = Number(request.nextUrl.searchParams.get('articleId'));
+
+  try {
+    const comments = await prisma.comment.findMany({
+      where: {
+        articleId,
+      },
+      orderBy: {
+        createdAt: 'desc',
+      },
+    });
+    return NextResponse.json(comments, { status: 200 });
+  } catch (error) {
+    return NextResponse.json({ error: String(error) }, { status: 400 });
   }
 }

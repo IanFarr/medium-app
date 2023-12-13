@@ -16,12 +16,32 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: validation.error }, { status: 400 });
   }
 
-  const newClap = await prisma.clap.create({
-    data: {
-      articleId: body.articleId,
-      authorId: body.authorId,
-    }
-  });
+  try {
+    const newClap = await prisma.clap.create({
+      data: {
+        articleId: body.articleId,
+        authorId: body.authorId,
+      }
+    });
+    return NextResponse.json(newClap, { status: 201 });
+  } catch (error) {
+    return NextResponse.json({ error: String(error) }, { status: 400 });
+  }
+}
 
-  return NextResponse.json(newClap, { status: 201 });
+// GET - Fetch num claps by articleId
+// Path: /api/clap?articleId
+export async function GET(request: NextRequest) {
+  const articleId = Number(request.nextUrl.searchParams.get('articleId'));
+
+  try {
+    const numClaps = await prisma.clap.count({
+      where: {
+        articleId,
+      },
+    });
+    return NextResponse.json(numClaps, { status: 200 });
+  } catch (error) {
+    return NextResponse.json({ error: String(error) }, { status: 400 });
+  }
 }
