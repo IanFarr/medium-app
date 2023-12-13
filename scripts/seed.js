@@ -1,72 +1,12 @@
-const {
-  users,
-  articles,
-  comments,
-  follows,
-  claps,
-} = require("../app/lib/placeholders/placeholder-data");
+const axios = require("axios");
 const { PrismaClient } = require("@prisma/client");
-
-const bcrypt = require("bcrypt");
 const prisma = new PrismaClient();
-
-async function seedUsers(client) {
-  try {
-    users.map(async (user) => {
-      user.password = await bcrypt.hash(user.password, 10);
-      return client.user.create({
-        data: user,
-      });
-    });
-    console.log("Users seeded");
-  } catch (error) {
-    console.error(error);
-  }
-}
-
-async function seedArticles(client) {
-  try {
-    await client.article.createMany({
-      data: articles,
-    });
-    console.log("Articles seeded");
-  } catch (error) {
-    console.error(error);
-  }
-}
-
-async function seedComments(client) {
-  try {
-    await client.comment.createMany({
-      data: comments,
-    });
-    console.log("Comments seeded");
-  } catch (error) {
-    console.error(error);
-  }
-}
-
-async function seedFollows(client) {
-  try {
-    await client.follow.createMany({
-      data: follows,
-    });
-    console.log("Follows seeded");
-  } catch (error) {
-    console.error(error);
-  }
-}
-
-async function seedClaps(client) {
-  try {
-    await client.clap.createMany({
-      data: claps,
-    });
-    console.log("Claps seeded");
-  } catch (error) {
-    console.error(error);
-  }
-}
+const {
+  placeholderArticle,
+} = require("../app/lib/placeholders/placeholder-article");
+const {
+  placeholderComment,
+} = require("./../app/lib/placeholders/placeholder-comment");
 
 const deleteData = async () => {
   try {
@@ -94,44 +34,102 @@ const deleteData = async () => {
   }
 };
 
-const seedPlaceholderUsers = async (client) => {
-  try {
-    await seedUsers(client);
-  } catch (error) {
-    console.error(error);
-  }
+const createUsers = async () => {
+  const userIds = [];
+  let res = await axios.post("http://localhost:3000/api/user/", {
+    email: "testEmail1@test.com",
+    username: "testUsername1",
+    name: "test name1",
+    password: "testPassword",
+    bio: "this is a test bio",
+    birthday: new Date("2023-01-01"),
+  });
+  userIds.push(res.data.id);
+
+  res = await axios.post("http://localhost:3000/api/user/", {
+    email: "testEmail2@test.com",
+    username: "testUsername2",
+    name: "test name2",
+    password: "testPassword",
+    bio: "this is a test bio",
+    birthday: new Date("2023-01-01"),
+  });
+  userIds.push(res.data.id);
+  console.log("seeded users");
+  return userIds;
 };
 
-const seedPlaceholderData = async () => {
-  try {
-    await prisma.$connect();
+const createArticles = async (userIds) => {
+  const articleIds = [];
+  let res = await axios.post("http://localhost:3000/api/article/", {
+    title: "test title1",
+    body: placeholderArticle,
+    tags: ["test"],
+    authorId: userIds[0],
+  });
+  articleIds.push(res.data.id);
 
-    await seedArticles(prisma);
-    await seedComments(prisma);
-    await seedFollows(prisma);
-    await seedClaps(prisma);
-  } catch (e) {
-    console.error(e);
-    process.exit(1);
-  } finally {
-    await prisma.$disconnect();
-  }
+  res = await axios.post("http://localhost:3000/api/article/", {
+    title: "test title2",
+    body: placeholderArticle,
+    tags: ["test"],
+    authorId: userIds[1],
+  });
+  articleIds.push(res.data.id);
+  console.log("seeded articles");
+  return articleIds;
 };
 
-const load = async () => {
-  try {
-    await prisma.$connect();
-    await deleteData();
-    await seedPlaceholderUsers(prisma);
-    await seedPlaceholderData();
-  } catch (e) {
-    console.error(e);
-    process.exit(1);
-  } finally {
-    await prisma.$disconnect();
-  }
+const createComments = async (userIds, articleIds) => {
+  await axios.post("http://localhost:3000/api/comment/", {
+    body: placeholderComment,
+    authorId: userIds[0],
+    articleId: articleIds[0],
+  });
+
+  await axios.post("http://localhost:3000/api/comment/", {
+    body: placeholderComment,
+    authorId: userIds[1],
+    articleId: articleIds[0],
+  });
+  console.log("seeded comments");
 };
 
-load().catch((e) =>
-  console.error(`an error occured while seeding the database: ${e}`)
-);
+const createClaps = async (userIds, articleIds) => {
+  await axios.post("http://localhost:3000/api/clap/", {
+    userId: userIds[0],
+    articleId: articleIds[1],
+  });
+
+  await axios.post("http://localhost:3000/api/clap/", {
+    userId: userIds[1],
+    articleId: articleIds[0],
+  });
+  console.log("seeded claps");
+};
+
+const createFollows = async (userIds) => {
+  await axios.post("http://localhost:3000/api/follow/", {
+    followerId: userIds[0],
+    followingId: userIds[1],
+  });
+
+  await axios.post("http://localhost:3000/api/follow/", {
+    followerId: userIds[1],
+    followingId: userIds[0],
+  });
+  console.log("seeded follows");
+};
+
+const seed = async () => {
+  await deleteData();
+
+  const userIds = await createUsers();
+  const articleIds = await createArticles(userIds);
+  await createComments(userIds, articleIds);
+  await createClaps(userIds, articleIds);
+  await createFollows(userIds);
+  console.log("seeded all data");
+};
+
+seed();

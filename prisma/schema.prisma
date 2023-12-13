@@ -60,14 +60,16 @@ model Follow {
   followerId  Int
   following   User     @relation("FollowingRelation", fields: [followingId], references: [id], onDelete: Cascade)
   followingId Int
+
+  @@unique([followerId, followingId])
 }
 
 model Clap {
   id        Int      @id @default(autoincrement())
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  author    User     @relation(fields: [authorId], references: [id], onDelete: Cascade)
-  authorId  Int
+  author    User     @relation(fields: [clapperId], references: [id], onDelete: Cascade)
+  clapperId Int
   article   Article  @relation(fields: [articleId], references: [id], onDelete: Cascade)
   articleId Int
 }

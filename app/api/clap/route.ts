@@ -4,7 +4,7 @@ import { z } from "zod";
 
 const createClapSchema = z.object({
   articleId: z.number(),
-  authorId: z.number(),
+  userId: z.number(),
 });
 
 // POST - Create a new clap
@@ -20,7 +20,7 @@ export async function POST(request: NextRequest) {
     const newClap = await prisma.clap.create({
       data: {
         articleId: body.articleId,
-        authorId: body.authorId,
+        clapperId: body.userId,
       }
     });
     return NextResponse.json(newClap, { status: 201 });
