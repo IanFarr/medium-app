@@ -7,7 +7,11 @@ interface SpinnerProps {
   showBackground: boolean;
 }
 
-export default function Spinner({withDelay, inButton = false, showBackground}: SpinnerProps) {
+export default function Spinner({
+  withDelay,
+  inButton = false,
+  showBackground,
+}: SpinnerProps) {
   const [spin, setSpin] = useState(true);
 
   useEffect(() => {
@@ -43,4 +47,4 @@ export default function Spinner({withDelay, inButton = false, showBackground}: S
       {spinner}
     </div>
   );
-};
+}
