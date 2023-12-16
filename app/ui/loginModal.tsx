@@ -7,7 +7,17 @@ import ModalActionButton from "./modal/modalActionButton";
 import { ModalLink } from "./modal/modalLink";
 import { signIn } from "next-auth/react";
 
-export default function LoginModal() {
+interface LoginProps {
+  open: boolean;
+  switchModal: () => void;
+  handleClose: () => void;
+}
+
+export default function LoginModal({
+  open,
+  switchModal,
+  handleClose,
+}: LoginProps) {
   const initialState = React.useMemo(
     () => ({
       email: "",
@@ -26,7 +36,6 @@ export default function LoginModal() {
 
   const [loginStatus, setLoginStatus] = React.useState("idle");
   const [spinning, setSpinning] = React.useState(false);
-  const [open, setOpen] = React.useState(false);
   const [state, setState] = React.useState(initialState);
   const [error, setError] = React.useState(initialError);
   const [authError, setAuthError] = React.useState(initialAuthError);
@@ -37,7 +46,7 @@ export default function LoginModal() {
       setAuthError(initialAuthError);
     }
     if (loginStatus === "success") {
-      setOpen(false);
+      handleClose();
       setSpinning(false);
       setState(initialState);
       setError(initialError);
@@ -46,7 +55,7 @@ export default function LoginModal() {
       setSpinning(false);
       setAuthError({ error: "Invalid email or password" });
     }
-  }, [initialAuthError, initialError, initialState, loginStatus]);
+  }, [handleClose, initialAuthError, initialError, initialState, loginStatus]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { id, value } = e.target;
@@ -103,11 +112,16 @@ export default function LoginModal() {
     });
   };
 
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => {
+  const closeModal = () => {
     setState(initialState);
     setError(initialError);
-    setOpen(false);
+    handleClose();
+  };
+
+  const goToCreateAccount = () => {
+    setState(initialState);
+    setError(initialError);
+    switchModal();
   };
 
   const title = "Sign In";
@@ -137,10 +151,7 @@ export default function LoginModal() {
         spinning={spinning}
         onClick={() => handleSubmit()}
       />
-      <ModalLink
-        text="Create an account"
-        onClick={() => console.log("Create account!")}
-      />
+      <ModalLink text="Create an account" onClick={() => goToCreateAccount()} />
     </>
   );
 
@@ -152,8 +163,7 @@ export default function LoginModal() {
 
   return (
     <>
-      <button onClick={handleOpen}>Sign In</button>
-      <Modal open={open} handleClose={handleClose} error={authError.error}>
+      <Modal open={open} handleClose={closeModal} error={authError.error}>
         {children}
       </Modal>
     </>

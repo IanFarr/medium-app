@@ -1,0 +1,43 @@
+.button {
+  font-size: 12px;
+  padding: 10px 50px;
+  border-radius: 60px;
+}
+
+.button:hover {
+  cursor: pointer;
+}
+
+.dark {
+  background-color: #141414;
+  color: white;
+  border: 1px solid black;
+}
+
+.dark:hover {
+  background-color: black;
+}
+
+.small {
+  font-size: 12px;
+  width: auto;
+  padding: 9px 18px;
+}
+
+.button:hover {
+  cursor: pointer;
+}
+
+.spin {
+  color: transparent;
+  cursor: not-allowed;
+  pointer-events: none;
+  background-color: lightgray;
+  border: 1px solid lightgray;
+}
+
+@media screen and (max-width: 444px) {
+  .small {
+    font-size: 10px;
+  }
+}
