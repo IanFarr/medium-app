@@ -1,0 +1,59 @@
+.fixedNavBar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1;
+}
+
+.topNavBar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 1rem;
+  height: 3.8rem;
+  background-color: #FFC017;
+  border-bottom: 1px solid #000;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+}
+
+.logo a {
+  font-size: 24px;
+  text-decoration: none;
+  color: #000;
+}
+
+.authButtons {
+  display: flex;
+  align-items: center;
+}
+
+.navLogin {
+  margin-right: 1rem;
+  font-size: 14px;
+}
+
+.navLogin:hover {
+  cursor: pointer;
+}
+
+@media (max-width: 444px) {
+  .topNavBar {
+    padding: 0 0.5rem;
+  }
+  .logo img {
+    width: 25px;
+    height: 14.15px;
+  }
+  .logo a {
+    font-size: 19px;
+  }
+  .navLogin {
+    font-size: 11px;
+  }
+  
+}

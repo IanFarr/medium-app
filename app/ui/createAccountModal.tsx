@@ -8,7 +8,17 @@ import { ModalLink } from "./modal/modalLink";
 import axios from "axios";
 import { signIn } from "next-auth/react";
 
-export default function CreateAccount() {
+interface CreateAccountProps {
+  open: boolean;
+  switchModal: () => void;
+  handleClose: () => void;
+}
+
+export default function CreateAccount({
+  open,
+  switchModal,
+  handleClose,
+}: CreateAccountProps) {
   const initialState = React.useMemo(
     () => ({
       name: "",
@@ -28,8 +38,6 @@ export default function CreateAccount() {
   const initialAuthError = React.useMemo(() => ({ error: "" }), []);
 
   const [status, setStatus] = React.useState("idle");
-  const [open, setOpen] = React.useState(false);
-  const handleOpen = () => setOpen(true);
   const [spinning, setSpinning] = React.useState(false);
   const [state, setState] = React.useState(initialState);
   const [error, setError] = React.useState(initialError);
@@ -41,7 +49,7 @@ export default function CreateAccount() {
       setAuthError(initialAuthError);
     }
     if (status === "success") {
-      setOpen(false);
+      handleClose();
       setSpinning(false);
       setState(initialState);
       setError(initialError);
@@ -49,7 +57,7 @@ export default function CreateAccount() {
     if (status === "error") {
       setSpinning(false);
     }
-  }, [initialAuthError, initialError, initialState, status]);
+  }, [handleClose, initialAuthError, initialError, initialState, status]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { id, value } = e.target;
@@ -85,10 +93,16 @@ export default function CreateAccount() {
     return valid;
   };
 
-  const handleClose = () => {
+  const closeModal = () => {
     setState(initialState);
     setError(initialError);
-    setOpen(false);
+    handleClose();
+  };
+
+  const goToLogin = () => {
+    setState(initialState);
+    setError(initialError);
+    switchModal();
   };
 
   const handleSubmit = () => {
@@ -158,7 +172,7 @@ export default function CreateAccount() {
       />
       <ModalLink
         text="< Already have an account? Sign in"
-        onClick={() => console.log("Sign in!")}
+        onClick={() => goToLogin()}
       />
     </>
   );
@@ -171,8 +185,7 @@ export default function CreateAccount() {
 
   return (
     <>
-      <button onClick={handleOpen}>Create Account</button>
-      <Modal open={open} handleClose={handleClose} error={authError.error}>
+      <Modal open={open} handleClose={closeModal} error={authError.error}>
         {children}
       </Modal>
     </>

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import styles from "@/app/ui/utils/spinner.module.scss";
+import styles from "@/app/ui/utils/spinner/spinner.module.scss";
 
 interface SpinnerProps {
   withDelay: boolean;

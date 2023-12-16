@@ -2,7 +2,7 @@
 
 import React from "react";
 import styles from "@/app/ui/modal/modalActionButton.module.css";
-import Spinner from "@/app/ui/utils/spinner";
+import Spinner from "@/app/ui/utils/spinner/spinner";
 
 interface ModalActionButtonProps {
   text: string;
