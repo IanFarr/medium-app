@@ -1,0 +1,28 @@
+.inputContainer {
+  margin-top: 22px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+.label {
+    margin-bottom: 5px;
+    font-size: 11px;
+    color: #2c3e50;
+}
+
+.input {
+    width: 238px;
+    border: 0;
+    border-bottom: 1.2px solid #2c3e50;
+    outline: none;
+}
+
+.error {
+    color: red;
+    font-size: 10px;
+    margin-top: 64px;
+    position: absolute;
+}

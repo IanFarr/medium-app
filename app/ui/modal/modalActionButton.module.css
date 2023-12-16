@@ -1,0 +1,22 @@
+.button {
+  background-color: #141414;
+  color: white;
+  font-size: 12px;
+  padding: 8px 80px;
+  border: 1px solid black;
+  border-radius: 60px;
+  width: 200px;
+}
+
+.button:hover {
+  background-color: black;
+  cursor: pointer;
+}
+
+.spin {
+  color: transparent;
+  cursor: not-allowed;
+  pointer-events: none;
+  background-color: lightgray;
+  border: 1px solid lightgray;
+}
