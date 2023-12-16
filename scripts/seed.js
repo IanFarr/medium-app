@@ -38,21 +38,17 @@ const createUsers = async () => {
   const userIds = [];
   let res = await axios.post("http://localhost:3000/api/user/", {
     email: "testEmail1@test.com",
-    username: "testUsername1",
     name: "test name1",
     password: "testPassword",
     bio: "this is a test bio",
-    birthday: new Date("2023-01-01"),
   });
   userIds.push(res.data.id);
 
   res = await axios.post("http://localhost:3000/api/user/", {
     email: "testEmail2@test.com",
-    username: "testUsername2",
     name: "test name2",
     password: "testPassword",
     bio: "this is a test bio",
-    birthday: new Date("2023-01-01"),
   });
   userIds.push(res.data.id);
   console.log("seeded users");

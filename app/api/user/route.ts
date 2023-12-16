@@ -5,11 +5,8 @@ import { z } from "zod";
 
 const createUserSchema = z.object({
   email: z.string().email(),
-  username: z.string().min(3).max(20),
   name: z.string().min(3).max(20),
   password: z.string().min(8),
-  bio: z.string().max(280),
-  birthday: z.coerce.date(),
 });
 
 const updateUserSchema = z.object({
@@ -32,11 +29,9 @@ export async function POST(request: NextRequest) {
     const newUser = await prisma.user.create({
       data: {
         email: body.email,
-        username: body.username,
         name: body.name,
         password: body.password,
         bio: body.bio,
-        birthday: body.birthday,
       }
     });
     return NextResponse.json(newUser, { status: 201 });
@@ -102,7 +97,6 @@ export async function GET(request: NextRequest) {
       id: true,
       email: true,
       name: true,
-      username: true,
       bio: true,
       articles: {
         orderBy: {

@@ -14,11 +14,9 @@ datasource db {
 model User {
   id        Int       @id @default(autoincrement())
   email     String    @unique
-  username  String    @unique
   name      String
   password  String
-  bio       String    @db.Text
-  birthday  DateTime
+  bio       String?   @db.Text
   articles  Article[]
   comments  Comment[]
   followers Follow[]  @relation("FollowerRelation")
