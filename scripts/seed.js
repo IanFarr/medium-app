@@ -23,9 +23,6 @@ const deleteData = async () => {
 
     await prisma.follow.deleteMany();
     console.log("Follows deleted");
-
-    await prisma.clap.deleteMany();
-    console.log("Claps deleted");
   } catch (e) {
     console.error(e);
     process.exit(1);
@@ -91,19 +88,6 @@ const createComments = async (userIds, articleIds) => {
   console.log("seeded comments");
 };
 
-const createClaps = async (userIds, articleIds) => {
-  await axios.post("http://localhost:3000/api/clap/", {
-    userId: userIds[0],
-    articleId: articleIds[1],
-  });
-
-  await axios.post("http://localhost:3000/api/clap/", {
-    userId: userIds[1],
-    articleId: articleIds[0],
-  });
-  console.log("seeded claps");
-};
-
 const createFollows = async (userIds) => {
   await axios.post("http://localhost:3000/api/follow/", {
     followerId: userIds[0],
@@ -123,7 +107,6 @@ const seed = async () => {
   const userIds = await createUsers();
   const articleIds = await createArticles(userIds);
   await createComments(userIds, articleIds);
-  await createClaps(userIds, articleIds);
   await createFollows(userIds);
   console.log("seeded all data");
 };

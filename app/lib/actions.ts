@@ -13,11 +13,6 @@ export async function fetchAllArticles() {
             name: true,
           },
         },
-        _count: {
-          select: {
-            claps: true,
-          },
-        },
       },
     });
     return articles;
@@ -53,11 +48,6 @@ export async function fetchArticleById(id: number) {
             },
           },
         },
-        _count: {
-          select: {
-            claps: true,
-          },
-        },
       },
     });
     return article;
@@ -81,28 +71,9 @@ export async function fetchArticlesByAuthorId(authorId: number) {
             name: true,
           },
         },
-        _count: {
-          select: {
-            claps: true,
-          },
-        },
       },
     });
     return articles;
-  } catch (error) {
-    throw new Error(String(error));
-  }
-}
-
-// Clap Actions
-export async function fetchNumClapsByArticleId(articleId: number) {
-  try {
-    const claps = await prisma.clap.count({
-      where: {
-        articleId,
-      },
-    });
-    return claps;
   } catch (error) {
     throw new Error(String(error));
   }
