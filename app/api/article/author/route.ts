@@ -20,11 +20,6 @@ export async function GET(request: NextRequest) {
             name: true,
           },
         },
-        _count: {
-          select: {
-            claps: true,
-          },
-        },
       },
     });
     return NextResponse.json(articles, { status: 200 });
