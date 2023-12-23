@@ -31,7 +31,7 @@ export async function POST(request: NextRequest) {
       `https://medium-ian-article-images.s3.us-west-1.amazonaws.com/${key}`
     );
 
-    return keyUrl.toString();
+    return Response.json({ url, fields, keyUrl });
   } catch (error) {
     if (error instanceof Error) {
       return Response.json({ error: error.message });
