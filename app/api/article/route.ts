@@ -1,6 +1,6 @@
-import prisma from '@/app/lib/prisma';
-import { NextRequest, NextResponse } from 'next/server';
-import { z } from 'zod';
+import prisma from "@/app/lib/prisma";
+import { NextRequest, NextResponse } from "next/server";
+import { z } from "zod";
 
 const createArticleSchema = z.object({
   title: z.string().min(3).max(100),
@@ -12,10 +12,10 @@ const createArticleSchema = z.object({
 // GET - Fetch all articles
 // Path: /api/article
 export async function GET(request: NextRequest) {
-  try{
+  try {
     const articles = await prisma.article.findMany({
       orderBy: {
-        createdAt: 'desc',
+        createdAt: "desc",
       },
       include: {
         author: {
@@ -36,6 +36,8 @@ export async function GET(request: NextRequest) {
 export async function POST(request: NextRequest) {
   const body = await request.json();
   const validation = createArticleSchema.safeParse(body);
+  const defaultImage =
+    "https://medium-ian-article-images.s3.us-west-1.amazonaws.com/defaultArticleImage";
   if (!validation.success) {
     return NextResponse.json({ error: validation.error }, { status: 400 });
   }
@@ -47,6 +49,7 @@ export async function POST(request: NextRequest) {
         body: body.body,
         authorId: body.authorId,
         tags: body.tags,
+        image: defaultImage,
       },
     });
     return NextResponse.json(newArticle, { status: 201 });
@@ -58,7 +61,7 @@ export async function POST(request: NextRequest) {
 // PATCH - Update an article
 // Path: /api/article/:id
 export async function PATCH(request: NextRequest) {
-  const id = Number(request.nextUrl.searchParams.get('id'));
+  const id = Number(request.nextUrl.searchParams.get("id"));
   const body = await request.json();
   const validation = createArticleSchema.safeParse(body);
   if (!validation.success) {
@@ -85,7 +88,7 @@ export async function PATCH(request: NextRequest) {
 // DELETE - Delete an article
 // Path: /api/article/:id
 export async function DELETE(request: NextRequest) {
-  const id = Number(request.nextUrl.searchParams.get('id'));
+  const id = Number(request.nextUrl.searchParams.get("id"));
 
   try {
     const deletedArticle = await prisma.article.delete({
