@@ -12,6 +12,9 @@
     "prisma:generate": "prisma generate"
   },
   "dependencies": {
+    "@aws-sdk/client-s3": "^3.478.0",
+    "@aws-sdk/s3-presigned-post": "^3.478.0",
+    "@aws-sdk/s3-request-presigner": "^3.478.0",
     "@prisma/client": "^5.7.0",
     "@types/bcryptjs": "^2.4.6",
     "@vercel/postgres": "^0.5.1",
@@ -31,6 +34,7 @@
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
+    "@types/uuid": "^9.0.7",
     "eslint": "^8",
     "eslint-config-next": "14.0.4",
     "typescript": "^5"
