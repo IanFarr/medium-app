@@ -68,6 +68,129 @@ const createArticles = async (userIds) => {
     tags: ["test"],
     authorId: userIds[1],
   });
+
+  // added more here
+  res = await axios.post("http://localhost:3000/api/article/", {
+    title: "test title3",
+    body: placeholderArticle,
+    tags: ["test"],
+    authorId: userIds[1],
+  });
+  res = await axios.post("http://localhost:3000/api/article/", {
+    title: "test title4",
+    body: placeholderArticle,
+    tags: ["test"],
+    authorId: userIds[1],
+  });
+  res = await axios.post("http://localhost:3000/api/article/", {
+    title: "test title5",
+    body: placeholderArticle,
+    tags: ["test"],
+    authorId: userIds[1],
+  });
+  res = await axios.post("http://localhost:3000/api/article/", {
+    title: "test title6",
+    body: placeholderArticle,
+    tags: ["test"],
+    authorId: userIds[1],
+  });
+  res = await axios.post("http://localhost:3000/api/article/", {
+    title: "test title7",
+    body: placeholderArticle,
+    tags: ["test"],
+    authorId: userIds[1],
+  });
+  res = await axios.post("http://localhost:3000/api/article/", {
+    title: "test title8",
+    body: placeholderArticle,
+    tags: ["test"],
+    authorId: userIds[1],
+  });
+  res = await axios.post("http://localhost:3000/api/article/", {
+    title: "test title9",
+    body: placeholderArticle,
+    tags: ["test"],
+    authorId: userIds[1],
+  });
+  res = await axios.post("http://localhost:3000/api/article/", {
+    title: "test title10",
+    body: placeholderArticle,
+    tags: ["test"],
+    authorId: userIds[1],
+  });
+  res = await axios.post("http://localhost:3000/api/article/", {
+    title: "test title11",
+    body: placeholderArticle,
+    tags: ["test"],
+    authorId: userIds[1],
+  });
+  res = await axios.post("http://localhost:3000/api/article/", {
+    title: "test title12",
+    body: placeholderArticle,
+    tags: ["test"],
+    authorId: userIds[1],
+  });
+  res = await axios.post("http://localhost:3000/api/article/", {
+    title: "test title13",
+    body: placeholderArticle,
+    tags: ["test"],
+    authorId: userIds[1],
+  });
+  res = await axios.post("http://localhost:3000/api/article/", {
+    title: "test title14",
+    body: placeholderArticle,
+    tags: ["test"],
+    authorId: userIds[1],
+  });
+  res = await axios.post("http://localhost:3000/api/article/", {
+    title: "test title15",
+    body: placeholderArticle,
+    tags: ["test"],
+    authorId: userIds[1],
+  });
+  res = await axios.post("http://localhost:3000/api/article/", {
+    title: "test title16",
+    body: placeholderArticle,
+    tags: ["test"],
+    authorId: userIds[1],
+  });
+  res = await axios.post("http://localhost:3000/api/article/", {
+    title: "test title17",
+    body: placeholderArticle,
+    tags: ["test"],
+    authorId: userIds[1],
+  });
+  res = await axios.post("http://localhost:3000/api/article/", {
+    title: "test title18",
+    body: placeholderArticle,
+    tags: ["test"],
+    authorId: userIds[1],
+  });
+  res = await axios.post("http://localhost:3000/api/article/", {
+    title: "test title19",
+    body: placeholderArticle,
+    tags: ["test"],
+    authorId: userIds[1],
+  });
+  res = await axios.post("http://localhost:3000/api/article/", {
+    title: "test title20",
+    body: placeholderArticle,
+    tags: ["test"],
+    authorId: userIds[1],
+  });
+  res = await axios.post("http://localhost:3000/api/article/", {
+    title: "test title21",
+    body: placeholderArticle,
+    tags: ["test"],
+    authorId: userIds[1],
+  });
+  res = await axios.post("http://localhost:3000/api/article/", {
+    title: "test title22",
+    body: placeholderArticle,
+    tags: ["test"],
+    authorId: userIds[1],
+  });
+
   articleIds.push(res.data.id);
   console.log("seeded articles");
   return articleIds;
