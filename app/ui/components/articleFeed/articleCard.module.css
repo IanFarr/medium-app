@@ -1,0 +1,97 @@
+.articleCardDiv {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    min-height: 140px;
+    max-width: 700px;
+    margin: 0.5rem 0;
+    padding: 0.5rem;
+    border-bottom: 1px solid lightgray;
+}
+
+.articleCardAuthorDiv {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    width: 100%;
+    margin-top: 0.5rem;
+}
+
+.articleCardTagDiv {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    width: 100%;
+    margin-top: 0.8rem;
+}
+
+.articleCardLeftDiv {
+  margin-right: 1.7rem;
+}
+
+.articleCardAuthorName {
+    font-size: 0.75rem;
+    font-weight: 600;
+    margin-left: 6px;
+    color: #000;
+}
+
+.articleCardTitle {
+    font-size: 1.15rem;
+    font-weight: 600;
+    color: #000;
+    margin: 0.1rem 0;
+}
+
+.articleCardStorySample {
+  font-size: 0.9rem;
+  font-weight: 400;
+  color: #363636;
+  margin: 0.3rem 0;
+}
+
+.articleCardDate {
+    font-size: 0.75rem;
+    font-weight: 400;
+    color: #363636;
+    margin: 0;
+}
+
+.articleCardTag {
+    font-size: 0.75rem;
+    font-weight: 400;
+    color: #000;
+    margin: 0;
+    margin-left: 0.8rem;
+    padding: 4px 9px;
+    border-radius: 60px;
+    background-color: #F2F2F2;
+    color: #313131;
+    border: 1px solid #F2F2F2;
+}
+
+@media  screen and (max-width: 700px) {
+  .articleCardTitle {
+    font-size: 0.9rem;
+  }
+
+  .articleCardStorySample {
+    display: none;
+  }
+
+  .articleCardDate {
+    font-size: 0.7rem;
+  }
+
+  .articleCardTag {
+    font-size: 0.7rem;
+  }
+
+  .articleCardImage {
+    height: 110px;
+    width: 140px;
+  }
+}

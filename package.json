@@ -16,6 +16,7 @@
     "@aws-sdk/s3-presigned-post": "^3.478.0",
     "@aws-sdk/s3-request-presigner": "^3.478.0",
     "@prisma/client": "^5.7.0",
+    "@tanstack/react-query": "^5.14.6",
     "@types/bcryptjs": "^2.4.6",
     "@vercel/postgres": "^0.5.1",
     "axios": "^1.6.2",
@@ -27,6 +28,7 @@
     "react": "^18",
     "react-dom": "^18",
     "react-icons": "^4.12.0",
+    "react-intersection-observer": "^9.5.3",
     "sass": "^1.69.5",
     "zod": "^3.22.4"
   },

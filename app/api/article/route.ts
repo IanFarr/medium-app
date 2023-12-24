@@ -11,12 +11,67 @@ const createArticleSchema = z.object({
 
 // GET - Fetch all articles
 // Path: /api/article
+// export async function GET(request: NextRequest) {
+//   try {
+//     const articles = await prisma.article.findMany({
+//       orderBy: {
+//         createdAt: "desc",
+//       },
+//       include: {
+//         author: {
+//           select: {
+//             name: true,
+//           },
+//         },
+//       },
+//     });
+//     return NextResponse.json(articles, { status: 200 });
+//   } catch (error) {
+//     return NextResponse.json({ error: String(error) }, { status: 400 });
+//   }
+// }
 export async function GET(request: NextRequest) {
+  const take = Number(request.nextUrl.searchParams.get("take"));
+  const lastCursor = Number(request.nextUrl.searchParams.get("lastCursor"));
+
   try {
-    const articles = await prisma.article.findMany({
+    let result = await prisma.article.findMany({
+      take: take ? take : 10,
+      skip: lastCursor ? 1 : 0,
+      cursor: lastCursor ? { id: lastCursor } : undefined,
       orderBy: {
         createdAt: "desc",
       },
+      include: {
+        author: {
+          select: {
+            name: true,
+            image: true,
+          },
+        },
+      },
+    });
+
+    if (result.length == 0) {
+      return new NextResponse(
+        JSON.stringify({
+          data: [],
+          metaData: {
+            lastCursor: null,
+            hasNextPage: false,
+          },
+        }),
+        { status: 200 }
+      );
+    }
+
+    const lastPostInResults: any = result[result.length - 1];
+    const cursor: any = lastPostInResults.id;
+
+    const nextPage = await prisma.article.findMany({
+      take: take ? take : 7,
+      skip: 1,
+      cursor: { id: cursor },
       include: {
         author: {
           select: {
@@ -25,7 +80,15 @@ export async function GET(request: NextRequest) {
         },
       },
     });
-    return NextResponse.json(articles, { status: 200 });
+
+    const data = {
+      data: result,
+      metaData: {
+        lastCursor: cursor,
+        hasNextPage: nextPage.length > 0,
+      },
+    };
+    return new NextResponse(JSON.stringify(data), { status: 200 });
   } catch (error) {
     return NextResponse.json({ error: String(error) }, { status: 400 });
   }
