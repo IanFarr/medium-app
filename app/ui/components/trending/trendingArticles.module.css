@@ -1,0 +1,25 @@
+.trendingArticlesDiv {
+    display: flex;
+    flex-direction: column;
+    margin: 0 100px;
+    padding: 50px 0 30px 0;
+}
+
+.trendingArticlesHeaderDiv {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin: 0 0 14px 0;
+}
+
+.trendingArticlesContentDiv {
+    display: flex;
+    flex-wrap: wrap;
+    padding: initial;
+}
+
+.trendingArticlesTitle {
+    font-size: 0.9rem;
+    font-weight: 500;
+    margin: 0 0 0 12px;
+}

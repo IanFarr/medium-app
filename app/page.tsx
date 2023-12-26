@@ -5,6 +5,7 @@ import SignOutButton from "./ui/signOutButton";
 import TopNavBar from "./ui/components/topNavBar/topNavBar";
 import Banner from "./ui/components/banner/banner";
 import ArticleFeed from "./ui/components/articleFeed/articleFeed";
+import TrendingArticles from "./ui/components/trending/trendingArticles";
 
 export default async function Home() {
   const session = await getServerSession(options);
@@ -14,6 +15,7 @@ export default async function Home() {
       <TopNavBar />
       <Banner />
       {session && <SignOutButton />}
+      <TrendingArticles />
       <ArticleFeed />
     </div>
   );
