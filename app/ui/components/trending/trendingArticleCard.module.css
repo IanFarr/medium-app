@@ -1,0 +1,46 @@
+.trendingArticleCardDiv {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    min-width: 300px;
+    margin: 0 0 24px 0;
+}
+
+.trendingArticleCardAuthorDiv {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+}
+
+.trendingArticleCardRank {
+    font-size: 2rem;
+    color: #F2F2F2;
+    margin: 0 12px 0 0;
+}
+
+.trendingArticleCardAuthorDiv {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    margin: 9.5px 0 10px 0;
+}
+
+.trendingArticleCardAuthorName {
+    font-size: 0.8rem;
+    font-weight: 600;
+    margin: 0 0 0 8px;
+}
+
+.trendingArticleCardTitle {
+    font-size: 1rem;
+    font-weight: 700;
+    margin: 0 0 10px 0;
+}
+
+.trendingArticleCardDate {
+    font-size: 0.7rem;
+    font-weight: 400;
+    margin: 0;
+    color: #6F6F6F;
+}
