@@ -35,10 +35,15 @@
 }
 
 .bannerImage img {
-  position: fixed;
   right: 0;
   height: 407px;
   width: 438.4px;
+}
+
+@media (max-width: 920px) {
+  .bannerImage {
+    display: none;
+  }
 }
 
 @media (max-width: 740px) {
